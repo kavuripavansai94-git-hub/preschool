@@ -4,19 +4,16 @@ import { useState, useEffect, useCallback, useMemo, memo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-// TASK 2 & 6: Fixed highlights array with correct paths and temp fix for 2 & 8
-const highlights = [
-  { id: 1, image: "/images/highlight1.jpg" },
-  { id: 2, image: "/images/highlight1.jpg" }, // Quick Fix: Reuse highlight1
-  { id: 3, image: "/images/highlight3.jpg" },
-  { id: 4, image: "/images/highlight4.jpg" },
-  { id: 5, image: "/images/highlight5.jpg" },
-  { id: 6, image: "/images/highlight6.jpg" },
-  { id: 7, image: "/images/highlight7.jpg" },
-  { id: 8, image: "/images/highlight3.jpg" }, // Quick Fix: Reuse highlight3
+const GALLERY_IMAGES = [
+  "https://images.unsplash.com/photo-1587654780291-39c9404d746b?q=80&w=1470&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1560420015-9a475899589d?q=80&w=1471&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=1440&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?q=80&w=1438&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1596464716127-f2a82984de30?q=80&w=1470&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1470&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1581078426770-6d336e5de7bf?q=80&w=1470&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1562519819-016930ada31c?q=80&w=1612&auto=format&fit=crop",
 ];
-
-const FALLBACK_IMAGE = "/hero-classroom.png";
 
 type GalleryImageProps = {
   src: string;
@@ -26,32 +23,19 @@ type GalleryImageProps = {
 };
 
 const GalleryImage = memo(({ src, index, onSelect, size = "large" }: GalleryImageProps) => {
-  const [imgSrc, setImgSrc] = useState(src);
   const heightClass = size === "large" ? "h-64" : "h-48";
   
-  // TASK 4: Debug Log
-  useEffect(() => {
-    console.log("Loading gallery image:", imgSrc);
-  }, [imgSrc]);
-
   return (
     <div 
       className={`relative ${heightClass} rounded-3xl overflow-hidden cursor-pointer group shadow-lg`}
-      onClick={() => onSelect(imgSrc)}
+      onClick={() => onSelect(src)}
     >
-      {/* TASK 5: Next.js Image Fix with unoptimized */}
       <Image 
-        src={imgSrc} 
+        src={src} 
         alt={`Gallery image ${index + 1}`} 
         fill 
-        unoptimized
         sizes="(max-width: 768px) 50vw, 25vw" 
-        className={`object-cover group-hover:scale-110 transition-transform duration-700`}
-        // TASK 3: Fallback Image
-        onError={() => {
-          console.warn(`Failed to load ${imgSrc}, using fallback.`);
-          setImgSrc(FALLBACK_IMAGE);
-        }}
+        className={`object-cover group-hover:scale-110 transition-transform duration-700`} 
       />
       <div className={`absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none`}>
         <span className={`text-white text-3xl font-bold`}>+</span>
@@ -68,7 +52,7 @@ const Gallery = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % highlights.length);
+      setActiveSlide((prev) => (prev + 1) % GALLERY_IMAGES.length);
     }, 5000);
     return () => clearInterval(timer);
   }, []);
@@ -78,42 +62,29 @@ const Gallery = () => {
   }, []);
 
   const carouselSlides = useMemo(() => 
-    highlights.map((item, idx) => {
-      // TASK 4: Debug Log
-      console.log("Loading carousel image:", item.image);
-      
-      return (
-        <div
-          key={item.id}
-          className={`absolute inset-0 transition-opacity duration-1000 ${
-            idx === activeSlide ? "opacity-100 z-10" : "opacity-0 z-0"
-          }`}
-        >
-          {/* TASK 5: Next.js Image Fix with unoptimized */}
-          <Image
-            src={item.image}
-            alt={`Highlight ${item.id}`}
-            fill
-            unoptimized
-            sizes="(max-width: 1024px) 100vw, 50vw"
-            className={`object-cover`}
-            priority={idx === 0}
-            // TASK 3: Fallback handling for carousel
-            onError={(e) => {
-              console.warn(`Failed to load carousel image ${item.image}`);
-              const target = e.target as HTMLImageElement;
-              target.src = FALLBACK_IMAGE;
-            }}
-          />
-          <div className={`absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8 md:p-12 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}>
-            <div className={`text-white transform translate-y-4 group-hover:translate-y-0 transition-transform`}>
-              <p className={`text-lg font-bold font-nunito`}>Joyful Moments</p>
-              <p className={`text-sm opacity-80 font-inter`}>Our students engaging in creative learning activities.</p>
-            </div>
+    GALLERY_IMAGES.map((img, idx) => (
+      <div
+        key={idx}
+        className={`absolute inset-0 transition-opacity duration-1000 ${
+          idx === activeSlide ? "opacity-100 z-10" : "opacity-0 z-0"
+        }`}
+      >
+        <Image
+          src={img}
+          alt={`Highlight ${idx + 1}`}
+          fill
+          sizes="(max-width: 1024px) 100vw, 50vw"
+          className={`object-cover`}
+          priority={idx === 0}
+        />
+        <div className={`absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8 md:p-12 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}>
+          <div className={`text-white transform translate-y-4 group-hover:translate-y-0 transition-transform`}>
+            <p className={`text-lg font-bold font-nunito`}>Joyful Moments</p>
+            <p className={`text-sm opacity-80 font-inter`}>Our students engaging in creative learning activities.</p>
           </div>
         </div>
-      );
-    }), [activeSlide]);
+      </div>
+    )), [activeSlide]);
 
   return (
     <section id="gallery" className={`section-padding bg-bg`}>
@@ -129,7 +100,7 @@ const Gallery = () => {
             {carouselSlides}
             {/* Carousel Dots */}
             <div className={`absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20`}>
-              {highlights.map((_, idx) => (
+              {GALLERY_IMAGES.map((_, idx) => (
                 <button
                   key={idx}
                   onClick={() => setActiveSlide(idx)}
@@ -145,12 +116,12 @@ const Gallery = () => {
           {/* Masonry-style Grid */}
           <div className={`grid grid-cols-2 gap-4`}>
             <div className={`grid gap-4`}>
-              <GalleryImage src={highlights[2].image} index={2} onSelect={handleImageSelect} size="large" />
-              <GalleryImage src={highlights[3].image} index={3} onSelect={handleImageSelect} size="medium" />
+              <GalleryImage src={GALLERY_IMAGES[2]} index={2} onSelect={handleImageSelect} size="large" />
+              <GalleryImage src={GALLERY_IMAGES[3]} index={3} onSelect={handleImageSelect} size="medium" />
             </div>
             <div className={`grid gap-4 mt-8`}>
-              <GalleryImage src={highlights[4].image} index={4} onSelect={handleImageSelect} size="medium" />
-              <GalleryImage src={highlights[5].image} index={5} onSelect={handleImageSelect} size="large" />
+              <GalleryImage src={GALLERY_IMAGES[4]} index={4} onSelect={handleImageSelect} size="medium" />
+              <GalleryImage src={GALLERY_IMAGES[5]} index={5} onSelect={handleImageSelect} size="large" />
             </div>
           </div>
         </div>
@@ -177,7 +148,7 @@ const Gallery = () => {
             ×
           </button>
           <div className={`relative w-full max-w-5xl h-[80vh] rounded-2xl overflow-hidden`} onClick={(e) => e.stopPropagation()}>
-            <Image src={selectedImage} alt="Enlarged gallery photo" fill unoptimized className={`object-contain`} />
+            <Image src={selectedImage} alt="Enlarged gallery photo" fill className={`object-contain`} />
           </div>
         </div>
       )}
