@@ -55,7 +55,7 @@ const ContactForm = () => {
         <div className={`grid lg:grid-cols-2 gap-16 items-start`}>
           
           {/* Form Side */}
-          <div className={`bg-white p-8 md:p-12 rounded-[40px] shadow-2xl border border-primary/5`}>
+          <div className={`bg-white p-8 md:p-12 rounded-[40px] shadow-2xl border border-primary/5 relative z-20`}>
             {isSubmitted ? (
               <div className={`text-center py-20 animate-fadeUp`}>
                 <div className={`w-24 h-24 bg-accent-green text-white rounded-full flex items-center justify-center text-4xl mx-auto mb-8 shadow-lg shadow-green-100 animate-bounce`}>
@@ -67,7 +67,7 @@ const ContactForm = () => {
                 </p>
                 <button 
                   onClick={() => setIsSubmitted(false)}
-                  className={`text-primary font-extrabold hover:underline font-nunito flex items-center gap-2 mx-auto`}
+                  className={`text-primary font-extrabold hover:underline font-nunito flex items-center gap-2 mx-auto relative z-20`}
                 >
                   ← Send another inquiry
                 </button>
@@ -79,7 +79,7 @@ const ContactForm = () => {
                   <p className={`text-text-muted font-inter`}>Fill out the form below and we'll get back to you shortly.</p>
                 </div>
                 
-                <form onSubmit={handleSubmit} className={`space-y-6`}>
+                <form onSubmit={handleSubmit} className={`space-y-6 relative z-20`}>
                   <div className={`grid md:grid-cols-2 gap-6`}>
                     <FormField label="Parent's Name">
                       <input 
@@ -87,7 +87,7 @@ const ContactForm = () => {
                         name="parentName"
                         type="text" 
                         placeholder="e.g. John Smith"
-                        className={`w-full px-6 py-4 rounded-2xl bg-bg border-2 border-transparent focus:border-primary focus:bg-white outline-none transition-all font-inter`}
+                        className={`w-full px-6 py-4 rounded-2xl bg-bg border-2 border-transparent focus:border-primary focus:bg-white outline-none transition-all font-inter relative z-20`}
                         value={formData.parentName}
                         onChange={handleInputChange}
                       />
@@ -98,7 +98,7 @@ const ContactForm = () => {
                         name="childName"
                         type="text" 
                         placeholder="e.g. Jane Smith"
-                        className={`w-full px-6 py-4 rounded-2xl bg-bg border-2 border-transparent focus:border-primary focus:bg-white outline-none transition-all font-inter`}
+                        className={`w-full px-6 py-4 rounded-2xl bg-bg border-2 border-transparent focus:border-primary focus:bg-white outline-none transition-all font-inter relative z-20`}
                         value={formData.childName}
                         onChange={handleInputChange}
                       />
@@ -112,17 +112,17 @@ const ContactForm = () => {
                         name="childAge"
                         type="text" 
                         placeholder="e.g. 3.5 years"
-                        className={`w-full px-6 py-4 rounded-2xl bg-bg border-2 border-transparent focus:border-primary focus:bg-white outline-none transition-all font-inter`}
+                        className={`w-full px-6 py-4 rounded-2xl bg-bg border-2 border-transparent focus:border-primary focus:bg-white outline-none transition-all font-inter relative z-20`}
                         value={formData.childAge}
                         onChange={handleInputChange}
                       />
                     </FormField>
                     <FormField label="Interested Program">
-                      <div className={`relative`}>
+                      <div className={`relative z-20`}>
                         <select 
                           required
                           name="program"
-                          className={`w-full px-6 py-4 rounded-2xl bg-bg border-2 border-transparent focus:border-primary focus:bg-white outline-none transition-all appearance-none font-inter`}
+                          className={`w-full px-6 py-4 rounded-2xl bg-bg border-2 border-transparent focus:border-primary focus:bg-white outline-none transition-all appearance-none font-inter relative z-20`}
                           value={formData.program}
                           onChange={handleInputChange}
                         >
@@ -143,7 +143,7 @@ const ContactForm = () => {
                         name="phone"
                         type="tel" 
                         placeholder="+91 98765 43210"
-                        className={`w-full px-6 py-4 rounded-2xl bg-bg border-2 border-transparent focus:border-primary focus:bg-white outline-none transition-all font-inter`}
+                        className={`w-full px-6 py-4 rounded-2xl bg-bg border-2 border-transparent focus:border-primary focus:bg-white outline-none transition-all font-inter relative z-20`}
                         value={formData.phone}
                         onChange={handleInputChange}
                       />
@@ -153,7 +153,7 @@ const ContactForm = () => {
                         required
                         name="tourDate"
                         type="date" 
-                        className={`w-full px-6 py-4 rounded-2xl bg-bg border-2 border-transparent focus:border-primary focus:bg-white outline-none transition-all font-inter`}
+                        className={`w-full px-6 py-4 rounded-2xl bg-bg border-2 border-transparent focus:border-primary focus:bg-white outline-none transition-all font-inter relative z-20`}
                         value={formData.tourDate}
                         onChange={handleInputChange}
                       />
@@ -165,7 +165,7 @@ const ContactForm = () => {
                       name="message"
                       rows={4}
                       placeholder="Tell us about your child's specific needs..."
-                      className={`w-full px-6 py-4 rounded-2xl bg-bg border-2 border-transparent focus:border-primary focus:bg-white outline-none transition-all resize-none font-inter`}
+                      className={`w-full px-6 py-4 rounded-2xl bg-bg border-2 border-transparent focus:border-primary focus:bg-white outline-none transition-all resize-none font-inter relative z-20`}
                       value={formData.message}
                       onChange={handleInputChange}
                     ></textarea>
@@ -174,7 +174,7 @@ const ContactForm = () => {
                   <button 
                     type="submit" 
                     disabled={isSubmitting}
-                    className={`w-full btn-primary text-lg py-5 shadow-xl flex items-center justify-center gap-3 font-nunito transition-all ${isSubmitting ? "opacity-70 scale-[0.98]" : "shimmer-btn"}`}
+                    className={`w-full btn-primary text-lg py-5 shadow-xl flex items-center justify-center gap-3 font-nunito transition-all relative z-20 ${isSubmitting ? "opacity-70 scale-[0.98]" : "shimmer-btn"}`}
                   >
                     {isSubmitting ? (
                       <>

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { SCHOOL_INFO } from "@/lib/constants";
 
 const HeroSection = () => {
@@ -35,16 +36,22 @@ const HeroSection = () => {
             Nurturing minds, sparking curiosity, and building lifelong friendships in a warm, safe environment for ages 2 to 6.
           </p>
           
-          <div className={`flex flex-col sm:flex-row gap-4 mb-12`}>
-            <button className={`btn-primary text-lg px-10 py-4 shimmer-btn font-nunito`}>
+          <div className={`flex flex-col sm:flex-row gap-4 mb-12 relative z-20`}>
+            <Link 
+              href="#contact" 
+              className={`btn-primary text-lg px-10 py-4 shimmer-btn font-nunito flex items-center justify-center`}
+            >
               Book a Free Tour →
-            </button>
-            <button className={`flex items-center justify-center gap-3 px-10 py-4 font-bold text-primary border-2 border-primary rounded-btn transition-all hover:bg-primary-light group font-nunito`}>
+            </Link>
+            <Link 
+              href="#gallery" 
+              className={`flex items-center justify-center gap-3 px-10 py-4 font-bold text-primary border-2 border-primary rounded-btn transition-all hover:bg-primary-light group font-nunito`}
+            >
               <span className={`w-8 h-8 flex items-center justify-center bg-primary text-white rounded-full group-hover:scale-110 transition-transform`}>
                 <svg className={`w-4 h-4 fill-current`} viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
               </span>
               Watch Our Story
-            </button>
+            </Link>
           </div>
 
           {/* Trust Badges */}
@@ -82,8 +89,8 @@ const HeroSection = () => {
             />
           </div>
           {/* Decorative shapes behind image */}
-          <div className={`absolute -top-6 -right-6 w-32 h-32 bg-accent-yellow rounded-full z-0 animate-float opacity-50`}></div>
-          <div className={`absolute -bottom-10 -left-10 w-48 h-48 bg-secondary rounded-[40px] z-0 animate-drift opacity-30`}></div>
+          <div className={`absolute -top-6 -right-6 w-32 h-32 bg-accent-yellow rounded-full z-0 animate-float opacity-50 pointer-events-none`}></div>
+          <div className={`absolute -bottom-10 -left-10 w-48 h-48 bg-secondary rounded-[40px] z-0 animate-drift opacity-30 pointer-events-none`}></div>
         </div>
       </div>
 

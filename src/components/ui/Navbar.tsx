@@ -14,7 +14,7 @@ const NavItem = memo(({ label, href, onClick }: NavItemProps) => (
   <Link
     href={href}
     onClick={onClick}
-    className={`text-text font-semibold hover:text-primary transition-colors text-sm uppercase tracking-wide font-nunito`}
+    className={`text-text font-semibold hover:text-primary transition-colors text-sm uppercase tracking-wide font-nunito relative z-20`}
   >
     {label}
   </Link>
@@ -58,11 +58,11 @@ const Navbar = () => {
           : "top-0 w-full bg-transparent py-6"
       }`}
     >
-      <div className={`container mx-auto px-6 md:px-12 flex justify-between items-center`}>
+      <div className={`container mx-auto px-6 md:px-12 flex justify-between items-center relative z-[90]`}>
         {/* Logo */}
         <Link 
           href="/" 
-          className={`flex items-center gap-2 group`}
+          className={`flex items-center gap-2 group relative z-20`}
           onClick={closeMobileMenu}
         >
           <div className={`bg-primary p-2 rounded-xl group-hover:rotate-12 transition-transform shadow-md`}>
@@ -79,11 +79,11 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Links */}
-        <div className={`hidden lg:flex items-center gap-10`}>
+        <div className={`hidden lg:flex items-center gap-10 relative z-20`}>
           {NAV_LINKS.map((link) => (
             <NavItem key={link.label} {...link} />
           ))}
-          <Link href="#contact" className={`btn-primary flex items-center gap-2 text-sm font-nunito shadow-lg hover:shadow-primary/30 active:scale-95 transition-all`}>
+          <Link href="#contact" className={`btn-primary flex items-center gap-2 text-sm font-nunito shadow-lg hover:shadow-primary/30 active:scale-95 transition-all relative z-20`}>
             Enroll Now
             <svg className={`w-4 h-4`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -93,7 +93,7 @@ const Navbar = () => {
 
         {/* Mobile Toggle */}
         <button
-          className={`lg:hidden text-text p-2 hover:bg-primary-light rounded-xl transition-colors`}
+          className={`lg:hidden text-text p-2 hover:bg-primary-light rounded-xl transition-colors relative z-20`}
           onClick={toggleMobileMenu}
           aria-label={isMobileMenuOpen ? "Close Menu" : "Open Menu"}
         >
@@ -109,34 +109,34 @@ const Navbar = () => {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`lg:hidden fixed inset-0 top-[72px] bg-white z-40 transition-all duration-500 ease-in-out ${
-          isMobileMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10 pointer-events-none"
+        className={`lg:hidden fixed inset-0 top-0 bg-white z-[70] transition-all duration-500 ease-in-out ${
+          isMobileMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-full pointer-events-none"
         }`}
       >
-        <div className={`flex flex-col p-8 gap-8 h-full bg-bg/50`}>
+        <div className={`flex flex-col p-8 pt-32 gap-8 h-full bg-bg/50 overflow-y-auto`}>
           {NAV_LINKS.map((link, idx) => (
             <Link
               key={link.label}
               href={link.href}
               onClick={closeMobileMenu}
-              className={`text-text font-bold hover:text-primary transition-all text-2xl font-nunito flex items-center justify-between group`}
+              className={`text-text font-bold hover:text-primary transition-all text-2xl font-nunito flex items-center justify-between group relative z-20`}
               style={{ transitionDelay: `${idx * 50}ms` }}
             >
               {link.label}
               <span className={`opacity-0 group-hover:opacity-100 transition-opacity`}>→</span>
             </Link>
           ))}
-          <div className={`mt-auto pb-12`}>
+          <div className={`mt-auto pb-12 relative z-20`}>
             <Link
               href="#contact"
               onClick={closeMobileMenu}
-              className={`btn-primary w-full text-center py-5 text-xl font-nunito shadow-xl`}
+              className={`btn-primary w-full text-center py-5 text-xl font-nunito shadow-xl flex items-center justify-center`}
             >
               Start Admission →
             </Link>
             <div className={`mt-8 flex justify-center gap-6`}>
               {Object.entries(SCHOOL_INFO.socials).map(([platform, url]) => (
-                <a key={platform} href={url} className={`text-primary hover:scale-110 transition-transform capitalize font-bold font-nunito`}>
+                <a key={platform} href={url} target="_blank" rel="noopener noreferrer" className={`text-primary hover:scale-110 transition-transform capitalize font-bold font-nunito`}>
                   {platform}
                 </a>
               ))}

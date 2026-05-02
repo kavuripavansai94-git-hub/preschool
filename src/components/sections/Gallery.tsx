@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo, memo } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const GALLERY_IMAGES = [
   "https://images.unsplash.com/photo-1587654780291-39c9404d746b?q=80&w=1470&auto=format&fit=crop",
@@ -36,7 +37,7 @@ const GalleryImage = memo(({ src, index, onSelect, size = "large" }: GalleryImag
         sizes="(max-width: 768px) 50vw, 25vw" 
         className={`object-cover group-hover:scale-110 transition-transform duration-700`} 
       />
-      <div className={`absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center`}>
+      <div className={`absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none`}>
         <span className={`text-white text-3xl font-bold`}>+</span>
       </div>
     </div>
@@ -76,7 +77,7 @@ const Gallery = () => {
           className={`object-cover`}
           priority={idx === 0}
         />
-        <div className={`absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8 md:p-12 opacity-0 group-hover:opacity-100 transition-opacity duration-500`}>
+        <div className={`absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8 md:p-12 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}>
           <div className={`text-white transform translate-y-4 group-hover:translate-y-0 transition-transform`}>
             <p className={`text-lg font-bold font-nunito`}>Joyful Moments</p>
             <p className={`text-sm opacity-80 font-inter`}>Our students engaging in creative learning activities.</p>
@@ -126,10 +127,10 @@ const Gallery = () => {
         </div>
 
         <div className={`mt-16 text-center`}>
-          <button className={`btn-primary inline-flex items-center gap-3 font-nunito group`}>
+          <Link href="#contact" className={`btn-primary inline-flex items-center gap-3 font-nunito group relative z-20`}>
             View Full Gallery
             <svg className={`w-5 h-5 group-hover:translate-x-1 transition-transform`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-          </button>
+          </Link>
         </div>
       </div>
 

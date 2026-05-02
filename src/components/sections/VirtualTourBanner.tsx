@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 const VirtualTourBanner = () => {
   return (
     <section className={`py-12`}>
@@ -21,13 +23,19 @@ const VirtualTourBanner = () => {
             <p className={`text-xl opacity-90 mb-10 leading-relaxed font-inter`}>
               See our bright classrooms, safe play areas, and creative spaces through our immersive 360° virtual tour experience.
             </p>
-            <div className={`flex flex-wrap justify-center gap-6`}>
-              <button className={`bg-white text-primary hover:bg-bg px-10 py-5 rounded-btn font-extrabold text-xl shadow-xl hover:shadow-2xl transition-all font-nunito`}>
+            <div className={`flex flex-wrap justify-center gap-6 relative z-20`}>
+              <Link 
+                href="#gallery" 
+                className={`bg-white text-primary hover:bg-bg px-10 py-5 rounded-btn font-extrabold text-xl shadow-xl hover:shadow-2xl transition-all font-nunito flex items-center justify-center`}
+              >
                 Start Virtual Tour →
-              </button>
-              <button className={`bg-primary-light/20 backdrop-blur-md text-white border-2 border-white/30 hover:bg-white/10 px-10 py-5 rounded-btn font-bold text-xl transition-all font-nunito`}>
+              </Link>
+              <Link 
+                href="#contact" 
+                className={`bg-primary-light/20 backdrop-blur-md text-white border-2 border-white/30 hover:bg-white/10 px-10 py-5 rounded-btn font-bold text-xl transition-all font-nunito flex items-center justify-center`}
+              >
                 Schedule In-Person Visit
-              </button>
+              </Link>
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useMemo, memo } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { PROGRAMS } from "@/lib/constants";
 import { Program } from "@/types";
 
@@ -56,10 +57,10 @@ const ProgramCard = memo(({ program, isActive }: ProgramCardProps) => (
         ))}
       </ul>
 
-      <button className={`btn-primary font-nunito group flex items-center gap-2`}>
+      <Link href="#contact" className={`btn-primary font-nunito group flex items-center gap-2 relative z-20 w-fit`}>
         Learn More About {program.title}
         <span className={`group-hover:translate-x-1 transition-transform`}>→</span>
-      </button>
+      </Link>
     </div>
   </div>
 ));

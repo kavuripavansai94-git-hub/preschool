@@ -15,7 +15,7 @@ const WhatsAppBubble = () => {
         How can we help?
       </div>
       <div className={`w-16 h-16 bg-[#25D366] rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform active:scale-95 relative`}>
-        <span className={`absolute inset-0 bg-[#25D366] rounded-full animate-ping opacity-20`}></span>
+        <span className={`absolute inset-0 bg-[#25D366] rounded-full animate-ping opacity-20 pointer-events-none`}></span>
         <svg
           viewBox="0 0 24 24"
           className={`w-9 h-9 text-white fill-current relative z-10`}
