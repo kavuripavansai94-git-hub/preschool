@@ -4,36 +4,53 @@ import { useState, useEffect, useCallback, useMemo, memo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+// TASK 2 & 6: Fixed highlights array with correct paths and temp fix for 2 & 8
 const highlights = [
   { id: 1, image: "/images/highlight1.jpg" },
-  { id: 2, image: "/images/highlight1.jpg" }, // Temp Fix: Reuse 1 for 2
+  { id: 2, image: "/images/highlight1.jpg" }, // Quick Fix: Reuse highlight1
   { id: 3, image: "/images/highlight3.jpg" },
   { id: 4, image: "/images/highlight4.jpg" },
   { id: 5, image: "/images/highlight5.jpg" },
   { id: 6, image: "/images/highlight6.jpg" },
   { id: 7, image: "/images/highlight7.jpg" },
-  { id: 8, image: "/images/highlight3.jpg" }, // Temp Fix: Reuse 3 for 8
+  { id: 8, image: "/images/highlight3.jpg" }, // Quick Fix: Reuse highlight3
 ];
 
-const GalleryImage = memo(({ src, index, onSelect, size = "large" }: { src: string; index: number; onSelect: (src: string) => void; size?: string }) => {
+const FALLBACK_IMAGE = "/hero-classroom.png";
+
+type GalleryImageProps = {
+  src: string;
+  index: number;
+  onSelect: (src: string) => void;
+  size?: "large" | "medium" | "small";
+};
+
+const GalleryImage = memo(({ src, index, onSelect, size = "large" }: GalleryImageProps) => {
+  const [imgSrc, setImgSrc] = useState(src);
   const heightClass = size === "large" ? "h-64" : "h-48";
   
-  console.log("Loading image:", src);
+  // TASK 4: Debug Log
+  useEffect(() => {
+    console.log("Loading gallery image:", imgSrc);
+  }, [imgSrc]);
 
   return (
     <div 
       className={`relative ${heightClass} rounded-3xl overflow-hidden cursor-pointer group shadow-lg`}
-      onClick={() => onSelect(src)}
+      onClick={() => onSelect(imgSrc)}
     >
+      {/* TASK 5: Next.js Image Fix with unoptimized */}
       <Image 
-        src={src} 
+        src={imgSrc} 
         alt={`Gallery image ${index + 1}`} 
         fill 
         unoptimized
         sizes="(max-width: 768px) 50vw, 25vw" 
-        className={`object-cover group-hover:scale-110 transition-transform duration-700`} 
-        onError={(e) => {
-          (e.target as HTMLImageElement).src = "/images/fallback.jpg";
+        className={`object-cover group-hover:scale-110 transition-transform duration-700`}
+        // TASK 3: Fallback Image
+        onError={() => {
+          console.warn(`Failed to load ${imgSrc}, using fallback.`);
+          setImgSrc(FALLBACK_IMAGE);
         }}
       />
       <div className={`absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none`}>
@@ -62,7 +79,9 @@ const Gallery = () => {
 
   const carouselSlides = useMemo(() => 
     highlights.map((item, idx) => {
+      // TASK 4: Debug Log
       console.log("Loading carousel image:", item.image);
+      
       return (
         <div
           key={item.id}
@@ -70,6 +89,7 @@ const Gallery = () => {
             idx === activeSlide ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
         >
+          {/* TASK 5: Next.js Image Fix with unoptimized */}
           <Image
             src={item.image}
             alt={`Highlight ${item.id}`}
@@ -78,8 +98,11 @@ const Gallery = () => {
             sizes="(max-width: 1024px) 100vw, 50vw"
             className={`object-cover`}
             priority={idx === 0}
+            // TASK 3: Fallback handling for carousel
             onError={(e) => {
-              (e.target as HTMLImageElement).src = "/images/fallback.jpg";
+              console.warn(`Failed to load carousel image ${item.image}`);
+              const target = e.target as HTMLImageElement;
+              target.src = FALLBACK_IMAGE;
             }}
           />
           <div className={`absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8 md:p-12 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}>
@@ -154,16 +177,7 @@ const Gallery = () => {
             ×
           </button>
           <div className={`relative w-full max-w-5xl h-[80vh] rounded-2xl overflow-hidden`} onClick={(e) => e.stopPropagation()}>
-            <Image 
-              src={selectedImage} 
-              alt="Enlarged gallery photo" 
-              fill 
-              unoptimized
-              className={`object-contain`} 
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = "/images/fallback.jpg";
-              }}
-            />
+            <Image src={selectedImage} alt="Enlarged gallery photo" fill unoptimized className={`object-contain`} />
           </div>
         </div>
       )}
