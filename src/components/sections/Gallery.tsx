@@ -6,13 +6,13 @@ import Link from "next/link";
 
 const GALLERY_IMAGES = [
   "https://images.unsplash.com/photo-1587654780291-39c9404d746b?q=80&w=1470&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1560420015-9a475899589d?q=80&w=1471&auto=format&fit=crop",
+  "/images/highlight2.jpg",
   "https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=1440&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?q=80&w=1438&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1596464716127-f2a82984de30?q=80&w=1470&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1470&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1581078426770-6d336e5de7bf?q=80&w=1470&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1562519819-016930ada31c?q=80&w=1612&auto=format&fit=crop",
+  "/images/highlight8.jpg",
 ];
 
 type GalleryImageProps = {
